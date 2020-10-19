@@ -10,28 +10,6 @@ output: html_document
 
 Ubicamos nuestro archivo de datos en una carpeta denominada data, dentro del nuevo proyecto creado.
 
-## Carga de paquetes para importar datos
-
-```{r}
-library("tidyverse")
-library("readxl")
-```
-
-## Importar archivo de excel a R
-
-```{r}
-read_xlsx(
-  path = "data/data_taller.xlsx", 
-  sheet="data"
-) -> data_taller_xlsx
-str(data_taller_xlsx)
-```
-
-```{r}
-## Le decimos a R que vamos a trabajar con esos datos y se los ponemos "en primer plano"
-attach(data_taller_xlsx)
-```
-
 ## Información sobre el conjunto de datos
 
 Los datos corresponden a información de biodiversidad marina relacionada con eventos de muestreo realizados anualmente en varias estaciones ubicadas en la costa oeste de Estados Unidos, que buscan cuantificar las condiciones ambientales y la biota encontrada a lo largo de la corriente de California . Los individuos capturados e identificados fueron contablizados. También se presentan datos de variables físicas como la temperatura del mar, profundidad y distancia a la costa. 
@@ -54,23 +32,6 @@ Auth, Toby; 03/20/2017. NOAA Fisheries Northwest Fisheries Science Center. Juven
 - individuals: Representa el número de individuos capturados 
 - comments: Comentarios realizados sobre los organismos capturados 
 
-## Dimensionalidad de los datos
-
-```{r}
-dim(data_taller_xlsx)
-```
-
-Tenemos 2451 filas o individuos y 13 variables ó columnas.
-
-## Limpieza de los datos
-
-Verificamos si tenemos datos faltantes
-
-```{r}
-sapply(data_taller_xlsx, function(x) sum(is.na(x)))
-```
-
-La variable surface_temperatura presenta 22 datos perdidos. Por tal motivo procedemos a probar si la pérdida de datos es aleatoria.
 
 ### Prueba para probar la pérdida aleatoria de datos
 
@@ -154,7 +115,7 @@ dim(vivos)
 sapply(vivos, function(x) sum(is.na(x)))
 ```
 
-En este caso no se tienen datos faltantes.
+La variable surface_temperatura presenta 22 datos perdidos. Por tal motivo procedemos a probar si la pérdida de datos es aleatoria.
 
 
 ### Valores duplicados
