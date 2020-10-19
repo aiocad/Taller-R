@@ -12,7 +12,7 @@ Ubicamos nuestro archivo de datos en una carpeta denominada data, dentro del nue
 
 ## Información sobre el conjunto de datos
 
-Los datos corresponden a información de biodiversidad marina relacionada con eventos de muestreo realizados anualmente en varias estaciones ubicadas en la costa oeste de Estados Unidos, que buscan cuantificar las condiciones ambientales y la biota encontrada a lo largo de la corriente de California . Los individuos capturados e identificados fueron contablizados. También se presentan datos de variables físicas como la temperatura del mar, profundidad y distancia a la costa. 
+Los datos corresponden a información de biodiversidad marina relacionada con eventos de muestreo realizados anualmente en varias estaciones ubicadas en la costa oeste de Estados Unidos, que buscan cuantificar las condiciones ambientales y la biota encontrada a lo largo de la corriente de California. Los individuos capturados e identificados fueron contablizados. También se presentan datos de variables físicas como la temperatura del mar, profundidad y distancia a la costa. 
 
 ## Fuente: 
 Auth, Toby; 03/20/2017. NOAA Fisheries Northwest Fisheries Science Center. Juvenile Fish Data: Prerecruit Survey Trawl Data Catch (https://www.webapps.nwfsc.noaa.gov/apex/parrdata/inventory/tables/table/prerecruit_survey_trawl_data_catch).
@@ -21,9 +21,10 @@ Auth, Toby; 03/20/2017. NOAA Fisheries Northwest Fisheries Science Center. Juven
 
 - cruise: Nombre del crucero
 - year: Año del crucero
-- station:Número de la estación
-- distance_from_shore:Distancia más cercana a la costa en kilómetros
-- offshore_distance: Distancia aproximada desde la costa hacia mar adentro. La categoría alta significa que el punto de toma de muestra está más alejado de la costa en comparación con los demás.
+- transect: Transecto
+- station: Número de la estación
+- distance_from_shore: Distancia más cercana a la costa en kilómetros
+- offshore_distance: Distancia aproximada desde la costa hacia mar adentro. La categoría alta significa que el punto de toma de muestra está más alejado de la costa en        comparación con los demás.
 - start_depth: Profundidad en metros del fondo al inicio de la toma de muestra. Puede dar una idea de la profundidad de la estación. 
 - depth: Variable profundidad inicial transformada en categórica ordinal. Da una idea de la profundidad de la estación. 
 - surface_temperature: Temperatura superficial del mar en grados centígrados medida al inicio de la colecta.
@@ -31,34 +32,6 @@ Auth, Toby; 03/20/2017. NOAA Fisheries Northwest Fisheries Science Center. Juven
 - maturity: Representa la edad de los individuos o su estado de madurez.
 - individuals: Representa el número de individuos capturados 
 - comments: Comentarios realizados sobre los organismos capturados 
-
-
-### Prueba para probar la pérdida aleatoria de datos
-
-```{r}
-# Instalamos paquetes 
-# install.packages("mvnmle")
-# install.packages("BaylorEdPsych")
-
-# A mediados de 2020 estos paquetes fueron desatendidos del CRAN
-# Sin embargo, podríamos instalarlos de forma autónoma (standalone)
-# [EN] Tools > Install packages > Install from: Package Archive File
-# [ES] Herramientas > Instalar paquetes > Instalar desde: Archivo de paquete
-```
-ERROR!!!! NO PUDE INSTALAR "mvnmle" TENGO LA VERSION 4 DE R!!
-
-```{r}
-# Cargamos paquetes
-library("mvnmle")
-library("BaylorEdPsych")
-
-# Hacemos el test de Little
-# Hipótesis nula: los datos están perdidos de forma aleatoria
-# Asumiendo que siguen una distribución normal multivariada
-# Hipótesis alterna: hay patrones de pérdida de datos
-LittleMCAR(data_taller_xlsx) -> little_test
-little_test$p.value
-```
 
 
 ## Cargar librerías
@@ -117,6 +90,34 @@ sapply(vivos, function(x) sum(is.na(x)))
 
 La variable surface_temperatura presenta 22 datos perdidos. Por tal motivo procedemos a probar si la pérdida de datos es aleatoria.
 
+### Prueba para probar si la pérdida de datos es aleatoria 
+
+Asignamos un nuevo objeto con las variables numéricas:
+
+```{r}
+select(vivos, distance_from_shore,start_depth,surface_temperature,individuals)->variables_numericas
+
+```
+
+```{r}
+# Cargamos el paquete MissMech
+library("MissMech")
+
+# Testeamos si nuestros datos están perdidos de forma MCAR
+# Hipótesis nula: no existen diferencias en la forma en que se pierden datos entre las variables
+# Dicho de otra manera, los datos están perdidos de forma aleatoria
+# Hipótesis alterna: sí existen diferencias (hay patrones de pérdida de datos)
+TestMCARNormality(variables_numericas)
+```
+De la prueba anterior se concluye que los datos no fueron perdidos de forma aleatotia.
+
+## Obtenemos el nuevo dataset luego de haber eliminado los 22 datos faltantes de la temperatura.
+
+Esto se hizo teniendo en cuenta que los datos no fueron perdidos de forma aleatoria.
+
+```{r}
+vivos[-(1765:1786),]-> data_dep1
+```
 
 ### Valores duplicados
 
@@ -137,7 +138,7 @@ Se observan que se mantienen los mismos registros, es decir no hay valores dupli
 summary(vivos$individuals)
 ```
 
-Se observa un valor maximo extremos, validaremos posibles valores outliners
+Se observa un valor máximo extremos, validaremos posibles valores outliners
 
 #
 ```{r}
