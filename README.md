@@ -41,7 +41,7 @@ Auth, Toby; 03/20/2017. NOAA Fisheries Northwest Fisheries Science Center. Juven
 
 ## Variables:
 
-cruise: Nombre del crucero
+###cruise: Nombre del crucero
 year: Año del crucero
 station:Número de la estación
 distance_from_shore:Distancia más cercana a la costa en kilómetros
