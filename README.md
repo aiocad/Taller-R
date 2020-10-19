@@ -5,94 +5,100 @@ date: "18/10/2020"
 output: html_document
 ---
 
-[Pruebas en R](https://stats.idre.ucla.edu/other/mult-pkg/whatstat/ )
 
-## Cargar librerías
+## Importar datos a R
 
-## Librerías Utilizadas durante la clase
+Ubicamos nuestro archivo de datos en una carpeta denominada data, dentro del nuevo proyecto creado.
 
-- [tydiverse](https://github.com/tidyverse/tidyverse): Es un conjunto de paquetes en R diseñados para ciencia de datos. Esto lo que significa es que ayuda en todo el proceso de importar transformar visualizar modelar y comunicar toda la información que normalmente utilizamos en procesos de ciencia de datos.
-- [ggplot2](https://github.com/tidyverse/ggplot2): Es un sistema para crear gráficos de forma declarativa.
-- [GGally](https://github.com/cran/GGally): Extiende ggplot2 agregando varias funciones para reducir la complejidad de combinar geoms con datos transformados.
-- [repr](https://github.com/IRkernel/repr): Este paquete existe para crear de manera confiable representaciones de datos de texto legible (e imagen visible) sin los efectos secundarios que print () puede causar, como invocar un buscapersonas y trazar en un dispositivo de trazado. En otras palabras, todas las funciones y métodos de repr son puros.
+## Carga de paquetes para importar datos
 
 ```{r}
 library("tidyverse")
+library("readxl")
 ```
 
-## Importar datos
+## Importar archivo de excel a R
 
 ```{r}
-read_delim(
-  file = "data/winequality-red.csv",
-  delim = ",", 
-  locale=locale(decimal_mark = ".")
-  ) -> wine_raw
-## Revisar la estructura de los datos
-str(wine_raw)
+read_xlsx(
+  path = "data/data_taller.xlsx", 
+  sheet="data"
+) -> data_taller_xlsx
+str(data_taller_xlsx)
+```
+
+```{r}
 ## Le decimos a R que vamos a trabajar con esos datos y se los ponemos "en primer plano"
-attach(wine_raw)
+attach(data_taller_xlsx)
 ```
 
 ## Información sobre el conjunto de datos
 
-### Información general
+Los datos corresponden a información de biodiversidad marina relacionada con eventos de muestreo realizados anualmente en varias estaciones ubicadas en la costa oeste de Estados Unidos, que buscan cuantificar las condiciones ambientales y la biota encontrada a lo largo de la corriente de California . Los individuos capturados e identificados fueron contablizados. También se presentan datos de variables físicas como la temperatura del mar, profundidad y distancia a la costa. 
 
-Los datos corresponden a una variación de un vino tradicional portugués llamado “Vinho Verde” proveniente de una región llamada Vinho, ubicada muy al norte de Portugal.
+## Fuente: 
+Auth, Toby; 03/20/2017. NOAA Fisheries Northwest Fisheries Science Center. Juvenile Fish Data: Prerecruit Survey Trawl Data Catch (https://www.webapps.nwfsc.noaa.gov/apex/parrdata/inventory/tables/table/prerecruit_survey_trawl_data_catch).
 
-### Variables
+## Variables:
 
-- **fixed acidity:** ácidos del vino que no se evaporan fácilmente.
-- **volatile acidity:** cantidad de ácido acético en el vino, el cual en altas cantidades genera sensaciones no placenteras y un sabor vinagroso.
-- **citric acid:** cantidad de ácido cítrico en pequeñas cantidades, el cual añade cierta frescura y sabor al vino.
-- **residual sugar:** cantidad de azucar residual luego del proceso de fermentación. Es raro tener menos de 1g/litro y los vinos con más de 45g/litro se consideran dulces.
-- **chlorides:** cantidad de sal en el vino.
-- **free sulfur dioxide:** cantidad de dióxido de azufre ($S0_2$) libre, el cual previene el crecimiento de microbios y la oxidación del vino.
-- **total sulfur dioxide:** cantidad total de dióxido de azufre ($S0_2$) en forma libre y fija; en bajas concentraciones es indetectable, en concentraciones superiores a 50ppm el $S0_2$ es evidente para la nariz y el sabor del vino.
-- **density:** la densidad del vino es cercana a la del agua dependiendo de la cantidad de azucar y alcohol.
-- **pH:** describe qué tan ácido o básico es un vino en un escala desde cero (muy ácido) hasta 14 (muy básico); la gran mayoría de vinos tienen un pH entre 3-4.
-- **sulphates:** un aditivo que contribuye a regular los niveles de dióxido de azufre ($S0_2$), el cual actúa como antimicrobios y antioxidante.
-- **alcohol:** porcentaje del alcohol del vino.
-- **quality:** puntuación del vino basada en datos sensoriales, en una escala entre 0 y 10.
-
-### Fuente
-
-Cortez, P., Cerdeira, A., Almeida, F., Matos, T., & Reis, J. (2009). Modeling wine preferences by data mining from physicochemical properties. Decision Support Systems, 47(4), 547-553.
-
-**Nota:** Es **muy importante** tener un contexto sobre el conjunto de datos.
+cruise: Nombre del crucero
+year: Año del crucero
+station:Número de la estación
+distance_from_shore:Distancia más cercana a la costa en kilómetros
+offshore_distance: Distancia aproximada desde la costa hacia mar adentro. La categoría alta significa que el punto de toma de muestra está más alejado de la costa en comparación con los demás.
+start_depth: Profundidad en metros del fondo al inicio de la toma de muestra. Puede dar una idea de la profundidad de la estación. 
+depth: Variable profundidad inicial transformada en categórica ordinal. Da una idea de la profundidad de la estación. 
+surface_temperature: Temperatura superficial del mar en grados centígrados medida al inicio de la colecta.
+taxon: Nombre científico de los organismos capturados a nivel de especie, género o familia. 
+maturity: Representa la edad de los individuos o su estado de madurez.
+individuals: Representa el número de individuos capturados 
+comments: Comentarios realizados sobre los organismos capturados 
 
 ## Dimensionalidad de los datos
 
 ```{r}
-dim(wine_raw)
-```
-Todos los cálculos y procedimientos matemáticos y estadísticos, a nivel computacional, se realizan mediante operaciones sobre matrices.
-```{r}
-## Obtener solo el número de filas
-nrow(wine_raw)
+dim(data_taller_xlsx)
 ```
 
-```{r}
-## Obtener solo el número de columnas
-ncol(wine_raw)
-```
+Tenemos 2451 filas o individuos y 13 variables ó columnas.
 
 ## Limpieza de los datos
 
-En la práctica la calidad de los datos puede estar afectada por los procesos de captura, sistematización y distribución. **Siempre** hay que verificar la calidad de nuestros datos.
-
-- Nombrado adecuado de las variables
-- Datos faltantes
-- Valores duplicados
-
-### Nombrado adecuado de las variables
-- [Cómo nombrar las cosas](http://www2.stat.duke.edu/~rcs46/lectures_2015/01-markdown-git/slides/naming-slides/naming-slides.pdf)
-
-Vamos a dejar los nombres de las columnas sin espacios.
+Verificamos si tenemos datos faltantes
 
 ```{r}
-names(wine_raw) <- str_replace_all(names(wine_raw), c(" " = "_"))
+sapply(data_taller_xlsx, function(x) sum(is.na(x)))
 ```
+
+La variable surface_temperatura presenta 22 datos perdidos. Por tal motivo procedemos a probar si la pérdida de datos es aleatoria.
+
+### Prueba para probar la pérdida aleatoria de datos
+
+```{r}
+# Instalamos paquetes 
+# install.packages("mvnmle")
+# install.packages("BaylorEdPsych")
+
+# A mediados de 2020 estos paquetes fueron desatendidos del CRAN
+# Sin embargo, podríamos instalarlos de forma autónoma (standalone)
+# [EN] Tools > Install packages > Install from: Package Archive File
+# [ES] Herramientas > Instalar paquetes > Instalar desde: Archivo de paquete
+```
+ERROR!!!! NO PUDE INSTALAR "mvnmle" TENGO LA VERSION 4 DE R!!
+
+```{r}
+# Cargamos paquetes
+library("mvnmle")
+library("BaylorEdPsych")
+
+# Hacemos el test de Little
+# Hipótesis nula: los datos están perdidos de forma aleatoria
+# Asumiendo que siguen una distribución normal multivariada
+# Hipótesis alterna: hay patrones de pérdida de datos
+LittleMCAR(data_taller_xlsx) -> little_test
+little_test$p.value
+```
+
 
 ### Datos faltantes
 
