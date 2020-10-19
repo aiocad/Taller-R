@@ -111,7 +111,7 @@ TestMCARNormality(variables_numericas)
 ```
 De la prueba anterior se concluye que los datos no fueron perdidos de forma aleatotia.
 
-## Obtenemos el nuevo dataset luego de haber eliminado los 22 datos faltantes de la temperatura.
+### Obtenemos el nuevo dataset luego de haber eliminado los 22 datos faltantes de la temperatura.
 
 Esto se hizo teniendo en cuenta que los datos no fueron perdidos de forma aleatoria.
 
