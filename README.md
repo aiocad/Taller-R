@@ -41,18 +41,18 @@ Auth, Toby; 03/20/2017. NOAA Fisheries Northwest Fisheries Science Center. Juven
 
 ## Variables:
 
-###cruise: Nombre del crucero
-year: Año del crucero
-station:Número de la estación
-distance_from_shore:Distancia más cercana a la costa en kilómetros
-offshore_distance: Distancia aproximada desde la costa hacia mar adentro. La categoría alta significa que el punto de toma de muestra está más alejado de la costa en comparación con los demás.
-start_depth: Profundidad en metros del fondo al inicio de la toma de muestra. Puede dar una idea de la profundidad de la estación. 
-depth: Variable profundidad inicial transformada en categórica ordinal. Da una idea de la profundidad de la estación. 
-surface_temperature: Temperatura superficial del mar en grados centígrados medida al inicio de la colecta.
-taxon: Nombre científico de los organismos capturados a nivel de especie, género o familia. 
-maturity: Representa la edad de los individuos o su estado de madurez.
-individuals: Representa el número de individuos capturados 
-comments: Comentarios realizados sobre los organismos capturados 
+- cruise: Nombre del crucero
+- year: Año del crucero
+- station:Número de la estación
+- distance_from_shore:Distancia más cercana a la costa en kilómetros
+- offshore_distance: Distancia aproximada desde la costa hacia mar adentro. La categoría alta significa que el punto de toma de muestra está más alejado de la costa en comparación con los demás.
+- start_depth: Profundidad en metros del fondo al inicio de la toma de muestra. Puede dar una idea de la profundidad de la estación. 
+- depth: Variable profundidad inicial transformada en categórica ordinal. Da una idea de la profundidad de la estación. 
+- surface_temperature: Temperatura superficial del mar en grados centígrados medida al inicio de la colecta.
+- taxon: Nombre científico de los organismos capturados a nivel de especie, género o familia. 
+- maturity: Representa la edad de los individuos o su estado de madurez.
+- individuals: Representa el número de individuos capturados 
+- comments: Comentarios realizados sobre los organismos capturados 
 
 ## Dimensionalidad de los datos
 
