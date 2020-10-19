@@ -70,10 +70,35 @@ Verificamos si tenemos datos faltantes
 sapply(data_taller_xlsx, function(x) sum(is.na(x)))
 ```
 
-La variable surface_temperatura presenta 22 datos perdidos. Por tal motivo procedemos a probar si la pérdida de datos es aleatoria.
+La variable surface_te,peratura presenta 22 datos perdidos. Por tal motivo procedemos a probar si la pérdida de datos es aleatoria.
 
-### Prueba para probar la pérdida aleatoria de datos
+### Prueba para probar si la pérdida de datos es aleatoria 
 
+Cargamos solo los datos numéricos
+
+```{r}
+read_xlsx(
+  path = "data/data_taller_numerica.xlsx", 
+  sheet="data"
+) -> data_taller_numerica_xlsx
+str(data_taller_numerica_xlsx)
+
+```
+
+```{r}
+# Cargamos el paquete MissMech
+library("MissMech")
+
+# Testeamos si nuestros datos están perdidos de forma MCAR
+# Hipótesis nula: no existen diferencias en la forma en que se pierden datos entre las variables
+# Dicho de otra manera, los datos están perdidos de forma aleatoria
+# Hipótesis alterna: sí existen diferencias (hay patrones de pérdida de datos)
+TestMCARNormality(data_taller_numerica_xlsx)
+```
+
+De la prueba anterior se concluye que los datos no fueron perdidos de forma aleatotia. ENTONCES QUÉ DECISIÓN TOMAMOS? LOS ELIMINAMOS? LOS PODEMOS IMPUTAR??
+
+El test con datos cetegóricos no se pudo realizar, el paquete mvnmle no se pudo instalar en la versión 4.0
 ```{r}
 # Instalamos paquetes 
 # install.packages("mvnmle")
@@ -84,20 +109,49 @@ La variable surface_temperatura presenta 22 datos perdidos. Por tal motivo proce
 # [EN] Tools > Install packages > Install from: Package Archive File
 # [ES] Herramientas > Instalar paquetes > Instalar desde: Archivo de paquete
 ```
-ERROR!!!! NO PUDE INSTALAR "mvnmle" TENGO LA VERSION 4 DE R!!
 
 ```{r}
 # Cargamos paquetes
-library("mvnmle")
-library("BaylorEdPsych")
+# library("mvnmle")
+# library("BaylorEdPsych")
 
 # Hacemos el test de Little
 # Hipótesis nula: los datos están perdidos de forma aleatoria
 # Asumiendo que siguen una distribución normal multivariada
 # Hipótesis alterna: hay patrones de pérdida de datos
-LittleMCAR(data_taller_xlsx) -> little_test
-little_test$p.value
+#LittleMCAR(data_taller_xlsx) -> little_test
+#little_test$p.value
 ```
+## Cargamos el nuevo dataset luego de haber eliminado los 22 datos en los cuales faltaba la temperatura.
+
+Esto se hizo teniendo en cuenta que los datos no fueron perdidos de forma aleatoria.
+
+```{r}
+read_xlsx(
+  path = "data/data_taller_sin_fal.xlsx", 
+  sheet="data"
+) -> data_taller_sin_fal_xlsx
+str(data_taller_sin_fal_xlsx)
+```
+
+## Análisis de Datos atípicos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ### Datos faltantes
