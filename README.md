@@ -5,6 +5,7 @@ date: "18/10/2020"
 output: html_document
 ---
 
+## Punto 1. CARGA DE DATOS Y CONTEXTO
 
 ## Importar datos a R
 
@@ -57,6 +58,8 @@ str(vivos)
 ## Le decimos a R que vamos a trabajar con esos datos y se los ponemos "en primer plano"
 attach(vivos)
 ```
+
+## Punto 2. LIMPIEZA Y DETECCIÓN DE DATOS ATÍPICOS
 
 ## Limpieza de los datos
 
@@ -172,7 +175,32 @@ atipicas
 ```
 Con relación a este análisis se obtuvieron 9 filas para revisar, las cuales correspondieron al grupo Euphausiidae conocido comúnmente como Krill, el cual presentó abundancias superiores a los 121000 individuos y alcanzó un máximo de 1017133. Para un mejor análisis se sugiere verificar el método de muestreo y las unidades que se reportan, ya que se registran como #número de individuos capturados, pero no se sabe si estos son datos brutos o estandarizados. Para el objetivo del presente taller, procederemos a trabajar con los datos obtenidos, sin depurar éstos valores. Supondremos que son número de individuos y se encuentran en la misma unidad.
 
-## Análisis descriptivo
+## Punto 3: ANÁLISIS DESCRIPTIVO DE VARIABLES CUANTITATIVAS
+
+### Cargamos paquetes y revisamos estructura
+
+```{r}
+library("tidyverse")
+library("skimr")
+library("summarytools")
+library("modeest")
+library("ggpubr")
+```
+
+```{r}
+
+## Revisar la estructura de los datos
+str(data_dep1)
+```
+
+```{r}
+## Convertimos variables respectivas a factores
+factores <- c("year")
+data_dep1 %>% mutate_at(factores,factor) -> data_factor
+```
+
+
+
 
 ### Resumen numérico
 
