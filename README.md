@@ -126,34 +126,32 @@ Se eliminaran duplicados en toda la fila, pues no se espera dos registros iguale
 Podemos buscar y eliminar duplicados basados en toda la fila.
 
 ```{r}
-distinct(vivos)
+distinct(data_dep1)
 ```
 Se observan que se mantienen los mismos registros, es decir no hay valores duplicados.
 
 
-## Datos atipicos.
+## Datos atípicos.
 
 ```{r}
 # Estadístico de resumen para la variable objetivo
-summary(vivos$individuals)
+summary(data_dep1$individuals)
 ```
 
-Se observa un valor máximo extremos, validaremos posibles valores outliners
+Se observa un valor máximo extremo, validaremos posibles valores outliners
 
 #
 ```{r}
 # Boxplot de una variable
-boxplot(vivos$individuals)
+boxplot(data_dep1$individuals)
 
 # Valores de potenciales outliers
-boxplot.stats(vivos$individuals)$out
+boxplot.stats(data_dep1$individuals)$out
 
 ```
 
 
-Se observa una gran varianción entre la variable objetivo "vivos" sin embargo los valores los interpretamos como logicos pues se puede tener muestreo de un solo organismo vivo hasta miles como se evidencio.
-
-
+Se observa una gran varianción entre la variable objetivo "individuals" sin embargo los valores los interpretamos como lógicos ya que esta variable hace referencia al número de individuos capturados por grupo biológico. Sabemos que contamos con grupos muy diversos por ejemplo, peces, medusas, camarones, krill entre otros, que podrían llegar a ser poco o muy abundantes.
 
 ## Análisis descriptivo
 
