@@ -61,7 +61,7 @@ attach(vivos)
 
 ## Punto 2. LIMPIEZA Y DETECCIÓN DE DATOS ATÍPICOS
 
-## Limpieza de los datos
+## 2.1 Limpieza de los datos
 
 En la práctica la calidad de los datos puede estar afectada por los procesos de captura, sistematización y distribución. **Siempre** hay que verificar la calidad de nuestros datos.
 
@@ -134,7 +134,7 @@ distinct(data_dep1)
 Se observan que se mantienen los mismos registros, es decir no hay valores duplicados.
 
 
-## Datos atípicos.
+## 2.2 Datos atípicos.
 
 ```{r}
 # Estadístico de resumen para la variable objetivo
@@ -193,23 +193,26 @@ library("ggpubr")
 str(data_dep1)
 ```
 
+
 ```{r}
 ## Convertimos variables respectivas a factores
-factores <- c("year")
+factores <- c("year", "station")
 data_dep1 %>% mutate_at(factores,factor) -> data_factor
 ```
 
-
-
-
-### Resumen numérico
+### Resumen numérico patra todo el conjunto de datos 
 
 El método **summary()** que trae por defecto R nos brinda estadísticas de resumen para cada una de las variables de nuestro conjunto de datos.
 
 ```{r}
 ## Resumen básico de datos
-summary(vivos)
+summary(data_factor)
 ```
+
+
+
+
+
 
 ### Resumen gráfico
 
