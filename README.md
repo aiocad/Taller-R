@@ -170,7 +170,7 @@ text(x=1:length(cooksd)+1, y=cooksd, labels=ifelse(cooksd>4*mean(cooksd, na.rm=T
 atipicas <- which((cooksd>4*mean(cooksd, na.rm=T)) == "TRUE")
 atipicas
 ```
-Con relación a este análisis se obtuvieron 8 filas para revisar. 
+Con relación a este análisis se obtuvieron 9 filas para revisar, las cuales correspondieron al grupo Euphausiidae conocido comúnmente como Krill, el cual presentó abundancias superiores a los 121000 individuos y alcanzó un máximo de 1017133. Para un mejor análisis se sugiere verificar el método de muestreo y las unidades que se reportan, ya que se registran como #número de individuos capturados, pero no se sabe si estos son datos brutos o estandarizados. Para el objetivo del presente taller, procederemos a trabajar con los datos obtenidos, sin depurar éstos valores. Supondremos que son número de individuos y se encuentran en la misma unidad.
 
 ## Análisis descriptivo
 
