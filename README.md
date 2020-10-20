@@ -149,9 +149,28 @@ boxplot(data_dep1$individuals)
 boxplot.stats(data_dep1$individuals)$out
 
 ```
-
-
 Se observa una gran varianción entre la variable objetivo "individuals" sin embargo los valores los interpretamos como lógicos ya que esta variable hace referencia al número de individuos capturados por grupo biológico. Sabemos que contamos con grupos muy diversos por ejemplo, peces, medusas, camarones, krill entre otros, que podrían llegar a ser poco o muy abundantes.
+
+Otro método para evaluar los datos atípicos es la distancia de cook. En ese sentido, diremos que tendremos una fila que representa una observación atípica si el valor observado es superior a 4 veces el promedio (no es un límite estricto).
+
+```{r}
+modelo.regresion <- lm(individuals ~ ., data=data_dep1)
+cooksd <- cooks.distance(modelo.regresion)
+```
+```{r}
+# Gráfica de la distancia de Cook
+plot(cooksd, pch="*", cex=2, main="Observaciones Atípicas por distancia de Cook") 
+# Superponemos el límite definido
+abline(h = 4*mean(cooksd, na.rm=T), col="red")  
+# Agregamos etiquetas de identificación para observaciones atípicas
+text(x=1:length(cooksd)+1, y=cooksd, labels=ifelse(cooksd>4*mean(cooksd, na.rm=T),names(cooksd),""), col="red") 
+```
+```{r}
+## Número de filas a revisar
+atipicas <- which((cooksd>4*mean(cooksd, na.rm=T)) == "TRUE")
+atipicas
+```
+Con relación a este análisis se obtuvieron 8 filas para revisar. 
 
 ## Análisis descriptivo
 
