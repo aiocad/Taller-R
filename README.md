@@ -175,7 +175,7 @@ atipicas
 ```
 Con relación a este análisis se obtuvieron 9 filas para revisar, las cuales correspondieron al grupo Euphausiidae conocido comúnmente como Krill, el cual presentó abundancias superiores a los 121000 individuos y alcanzó un máximo de 1017133. Para un mejor análisis se sugiere verificar el método de muestreo y las unidades que se reportan, ya que se registran como #número de individuos capturados, pero no se sabe si estos son datos brutos o estandarizados. Para el objetivo del presente taller, procederemos a trabajar con los datos obtenidos, sin depurar éstos valores. Supondremos que son número de individuos y se encuentran en la misma unidad.
 
-## Punto 3: ANÁLISIS DESCRIPTIVO DE VARIABLES CUANTITATIVAS
+## Punto 3: ANÁLISIS DESCRIPTIVO 
 
 ### Cargamos paquetes y revisamos estructura
 
@@ -200,7 +200,7 @@ factores <- c("year", "station")
 data_dep1 %>% mutate_at(factores,factor) -> data_factor
 ```
 
-### Resumen numérico patra todo el conjunto de datos 
+### Resumen numérico para todo el conjunto de datos 
 
 El método **summary()** que trae por defecto R nos brinda estadísticas de resumen para cada una de las variables de nuestro conjunto de datos.
 
@@ -209,6 +209,29 @@ El método **summary()** que trae por defecto R nos brinda estadísticas de resu
 summary(data_factor)
 ```
 
+Un método que resume la estadística descriptiva de las variables numéricas:
+
+```{r}
+summarytools::descr(data_factor)
+```
+En total se obtuvieron 2430 registros, 890 para el año 2011, 317 para el 2013, 617 para el 2014 y 606 para el año 2015. Con base en estos análisis, podemos decir que nuestra variable de interes "individuals" presentó un promedio de 3025 individuos capturados con un rango de variación entre 1 como el valor mínimo y 1017133 como el valor máximo con una desviación estándard de 34459.99. El valor central o la mediana fué de 4 individuos capturados. Por su parte la temperatura superficial del mar tuvo un promedio de 13.98 °C con una variación entre 2.4 y 17.4, la desviación estándard fue de 1.70. La profundidad al inicio del muestreo tuvo un promedio de 708.15 metros con st de 799.58 y un rango de variación entre 57 y 3100 metros. La distancia a la costa tuvo un promedio de 46.91 kilómetros con un rango de variación entre 6.7 y 176.3 kilómetros. La desviación estándard fue de 24.8.
+
+
+
+También podemos sacar estadísticos descriptivos para la variable cualitativa "taxon" que se refiere a los diferentes grupos de organismos.
+
+
+```{r}
+# Moda
+mfv(data_factor$taxon)
+
+# Frecuencias
+table(data_factor$taxon)
+
+# Proporciones
+prop.table(table(data_factor$taxon))
+
+```
 
 
 
