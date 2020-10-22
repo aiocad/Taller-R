@@ -236,7 +236,7 @@ Con base en éste análisis, podemos decir que el taxón con mayor frecuencia de
 
 ### Resumen gráfico
 
-1. Análisis univariado variables continuas
+### 1. Análisis univariado variables continuas
 
 A. Exploramos nuestra variable de interés "individuals" de tipo continua con un diagrama de puntos, un histograma y un boxplot.
 
@@ -290,7 +290,7 @@ boxplot(data_factor$distance_from_shore)
 
 Por último, la mayoría de los puntos de muestreo se ubicaron entre los 25 y 70 kilómetros de la costa. Sólo dos registros superaron los 100 km de distancia.
 
-2. Asociación entre variables
+## 2. Asociación entre variables
 
 A. Posibles diagramas de dispersión entre las variables continuas y correlaciones.
 
