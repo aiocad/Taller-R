@@ -220,7 +220,6 @@ En total se obtuvieron 2430 registros, 890 para el año 2011, 317 para el 2013, 
 
 También podemos sacar estadísticos descriptivos para la variable cualitativa "taxon" que se refiere a los diferentes grupos de organismos.
 
-
 ```{r}
 # Moda
 mfv(data_factor$taxon)
@@ -233,7 +232,7 @@ prop.table(table(data_factor$taxon))
 
 ```
 
-
+Con base en éste análisis, podemos decir que el taxón con mayor frecuencia de aparición fue el grupo "Euphausiidae" con 156 ocurrencias que representaron una proporción de 0.06 (6%).  
 
 
 
