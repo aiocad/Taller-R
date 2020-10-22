@@ -124,7 +124,7 @@ vivos[-(1765:1786),]-> data_dep1
 
 ### Valores duplicados
 
-Se eliminaran duplicados en toda la fila, pues no se espera dos registros iguales.
+Se eliminarán duplicados en toda la fila, pues no se espera dos registros iguales.
 
 Podemos buscar y eliminar duplicados basados en toda la fila.
 
@@ -238,21 +238,61 @@ Con base en éste análisis, podemos decir que el taxón con mayor frecuencia de
 
 ### Resumen gráfico
 
-```{r, out.width = '100%'}
-## Cargamos la librería ggplot2
-library(ggplot2)
-## Usamos el método para graficar histogramas
-## Seleccionamos como objetivo la variable quality
-ggplot(vivos, aes(individuals)) +
-    geom_histogram()
+#Análisis univariado
+
+A. Exploramos nuestra variable de interés "individuals" de tipo continua con un diagrama de puntos, un histograma y un boxplot.
+
+Diagrama de puntos
+
+```{r}
+plot(data_factor$individuals)
 ```
 
+Histograma
 
 
-Se evidencia que existe una gran desproporción en las variable individuos, seguramente dependiendo del organismos
+```{r}
+hist(data_factor$individuals)
+
+Boxplot
+
+```{r}
+boxplot(data_factor$individuals)
+```
+Redimensionando los datos,
+
+```{r}
+data_factor[data_factor$individuals < 20, ]-> data_factor_red
+boxplot(data_factor_red$individuals)
+```
+
+Con base en las anteriores gráficas, se evidencia que la mayoría de observaciones registraron un conteo menor a los 200000 individuos capturados, mientras que unos pocos datos fueron mayores a 200000 y solo un registro superó el valor de 1000000 individuos capturados. El histograma nos muestra el agrupamiento de la mayoría de los datos con valores bajos menores a los 200000 individuos capturados. Al redimensionar el boxplot se evidencia que el valor de la mediana es muy pequeño (4) y el 50% de la información está agrupado en valores de conteo bajos menores a 5 individuos capturados.
 
 
-#Analisis entre variables numericas.
+B. Variable surface_temperature
+
+```{r}
+boxplot(data_factor$surface_temperature)
+```
+
+Al construir un boxplot con esta variable el 50% de la información se agrupó entre valores de 13°C y 15°C, además de evidencian valores muy bajos menores a los 10°C y un dato menor a 5°C, los cuales se consideran atípicos para la zona de estudio, por lo que se sugiere hacer una revisión de la captura de estos datos.
+
+C. Variable start_depth
+
+```{r}
+boxplot(data_factor$start_depth)
+```
+El comportamiento de esta variable muestra que los datos se agruparon entre profundidades inciales de 200 y 1000 metros aproximadamente, con algunos valores atípicos que superaron los 2500 metros.
+
+D. Distancia a la costa
+
+```{r}
+boxplot(data_factor$distance_from_shore)
+```
+
+Por último, la mayoría de los puntos de muestreo se ubicaron entre los 25 y 70 kilómetros de la costa. Sólo dos registros superaron los 100 km de distancia.
+
+#Análisis entre variables numéricas.
 
 Definimos un vector con solo las variables númericas
 
