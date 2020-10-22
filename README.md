@@ -316,20 +316,54 @@ ggpairs(
   ) 
 ```
 
-Correlación de Spearman para nuestras variables numéricas:
+Matriz de correlación gráfica:
+```{r}
+library("corrplot")
+data_dep1_num%>% 
+  cor %>% 
+  corrplot.mixed(lower = "number", upper = "color", lower.col = "#aaaaaa", number.cex = 0.6, tl.cex = 0.6)
+```
+
+Con base en las variables continuas se evidencia que no existe una correlación entre las variables independientes y nuestra variable de interés denominada "individuals". La única correlación fuerte encontrada fué positiva entre las variables "distance_from_shore" y "start_depth", lo cual es obvio ya que a mayor distancia de la costa hay mayor profundidad.
+
+
+B. Visualización gráfica entre una variable categórica y una continua: boxplot por grupos.
+
+Individuos por crucero
 
 ```{r}
-ggcorr(
-  data_dep1_num, 
-  method = c("everything", "spearman"),
-  size = 3
-  )
+ggboxplot(data_factor, x = "cruise", y = "individuals",
+          palette = c("#00AFBB", "#E7B800"))
+```
+
+Individuos por estación
+
+```{r}
+ggboxplot(data_factor, x = "station", y = "individuals",
+          palette = c("#00AFBB", "#E7B800"))
 ```
 
 
-Con base en las variables continuas se evidencia que no exite una correlación entre las variables independientes y nuestra variable de interés denominada "individuals". La única correlación fuerte encontrada fué positiva entre las variables "distance_from_shore" y "start_depth", lo cual es obvio ya que a mayor distancia de la costa hay mayor profundidad.
+Individuos por año
 
-#Analisis entre variables numericas y variables categoricas.
+```{r}
+ggboxplot(data_factor, x = "year", y = "individuals",
+          palette = c("#00AFBB", "#E7B800"))
+```
+
+
+
+Cómo se comportó la temperatura respecto al año:
+
+```{r}
+ggboxplot(data_factor, x = "year", y = "surface_temperature",
+          palette = c("#00AFBB", "#E7B800"))
+```
+
+Con base ne las gráficas anteriores podemos deducir que la mayor variación en el conteo de individuos se presentó en el crucero "Pre-recruit", en el cual se presentan los datos más altos de conteo. Respecto a las estaciones, la estación 3 fué la que presentó mayor variación entre los conteos. Con base en el año de captura, se observó que en el 2013 y 2014 se presentan los datos con valores más abundantes, mientras que en el 2015 los valores reportados fueron menores a los 2000 individuos capturados. Con relación a la temperatura, se registraron valores más bajos en el año 2015 y un mayor número de datos atípicos en el 2013. 
+
+
+B. Asociación entre una variable categórica y una continua
 
 
 ```{r}
@@ -339,6 +373,10 @@ p + geom_boxplot()
 
 Se evidencia un organismo (Variable taxon) que contiene la mayor cantidad de individuos.
 
+Por facilidad, haremos una prueba de Kruskall-Wallis cuyo p-valor nos indicará si existe una relación significante entre las variables.
+
+Hipótesis nula: las variables son independientes.
+Hipótesis alternativa: las variables son dependientes.
 
 ```{r}
 p <- ggplot(vivos, aes(x=depth, y=individuals))
