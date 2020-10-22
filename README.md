@@ -315,7 +315,22 @@ vivos %>% mutate(
 head(datos_completos_fechas[(ncol(datos_completos_fechas)-1):ncol(datos_completos_fechas)])
 ```
 
+## Punto 4: Tabla dinámica
 
+Instalación de paquetes y carga de librerías:
+
+```{r}
+install_github("ramnathv/htmlwidgets")
+library(devtools)
+install_github("smartinsightsfromdata/rpivotTable")
+library(rpivotTable)
+```
+
+Construcción de la tabla dinámica: la salida nos muestra una tabla dinámica como se trabaja en excel, podemos hacer la combinación deseada de las variables de interés.
+
+```{r}
+rpivotTable(data_factor, rows="year", col="offshore_distance", aggregatorName="Sum", vals="individuals")
+```
 
 
 
