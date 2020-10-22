@@ -173,7 +173,7 @@ text(x=1:length(cooksd)+1, y=cooksd, labels=ifelse(cooksd>4*mean(cooksd, na.rm=T
 atipicas <- which((cooksd>4*mean(cooksd, na.rm=T)) == "TRUE")
 atipicas
 ```
-Con relación a este análisis se obtuvieron 9 filas para revisar, las cuales correspondieron al grupo Euphausiidae conocido comúnmente como Krill, el cual presentó abundancias superiores a los 121000 individuos y alcanzó un máximo de 1017133. Para un mejor análisis se sugiere verificar el método de muestreo y las unidades que se reportan, ya que se registran como #número de individuos capturados, pero no se sabe si estos son datos brutos o estandarizados. Para el objetivo del presente taller, procederemos a trabajar con los datos obtenidos, sin depurar éstos valores. Supondremos que son número de individuos y se encuentran en la misma unidad.
+Con relación a este análisis se obtuvieron 9 filas para revisar, las cuales correspondieron al grupo Euphausiidae conocido comúnmente como Krill, el cual presentó abundancias superiores a los 121000 individuos y alcanzó un máximo de 1017133. Para un mejor análisis, se sugiere verificar el método de muestreo y las unidades que se reportan, ya que se registran como #número de individuos capturados, pero no se sabe si estos son datos brutos o estandarizados. Para el objetivo del presente taller, procederemos a trabajar con los datos obtenidos, sin depurar éstos valores. Supondremos que son número de individuos y se encuentran en la misma unidad.
 
 ## Punto 3: ANÁLISIS DESCRIPTIVO 
 
@@ -216,8 +216,6 @@ summarytools::descr(data_factor)
 ```
 En total se obtuvieron 2430 registros, 890 para el año 2011, 317 para el 2013, 617 para el 2014 y 606 para el año 2015. Con base en estos análisis, podemos decir que nuestra variable de interes "individuals" presentó un promedio de 3025 individuos capturados con un rango de variación entre 1 como el valor mínimo y 1017133 como el valor máximo con una desviación estándard de 34459.99. El valor central o la mediana fué de 4 individuos capturados. Por su parte la temperatura superficial del mar tuvo un promedio de 13.98 °C con una variación entre 2.4 y 17.4, la desviación estándard fue de 1.70. La profundidad al inicio del muestreo tuvo un promedio de 708.15 metros con st de 799.58 y un rango de variación entre 57 y 3100 metros. La distancia a la costa tuvo un promedio de 46.91 kilómetros con un rango de variación entre 6.7 y 176.3 kilómetros. La desviación estándard fue de 24.8.
 
-
-
 También podemos sacar estadísticos descriptivos para la variable cualitativa "taxon" que se refiere a los diferentes grupos de organismos.
 
 ```{r}
@@ -238,7 +236,7 @@ Con base en éste análisis, podemos decir que el taxón con mayor frecuencia de
 
 ### Resumen gráfico
 
-#Análisis univariado
+1. Análisis univariado variables continuas
 
 A. Exploramos nuestra variable de interés "individuals" de tipo continua con un diagrama de puntos, un histograma y un boxplot.
 
@@ -269,7 +267,7 @@ boxplot(data_factor_red$individuals)
 Con base en las anteriores gráficas, se evidencia que la mayoría de observaciones registraron un conteo menor a los 200000 individuos capturados, mientras que unos pocos datos fueron mayores a 200000 y solo un registro superó el valor de 1000000 individuos capturados. El histograma nos muestra el agrupamiento de la mayoría de los datos con valores bajos menores a los 200000 individuos capturados. Al redimensionar el boxplot se evidencia que el valor de la mediana es muy pequeño (4) y el 50% de la información está agrupado en valores de conteo bajos menores a 5 individuos capturados.
 
 
-B. Variable surface_temperature
+B. Boxplot Variable surface_temperature
 
 ```{r}
 boxplot(data_factor$surface_temperature)
@@ -277,14 +275,14 @@ boxplot(data_factor$surface_temperature)
 
 Al construir un boxplot con esta variable el 50% de la información se agrupó entre valores de 13°C y 15°C, además de evidencian valores muy bajos menores a los 10°C y un dato menor a 5°C, los cuales se consideran atípicos para la zona de estudio, por lo que se sugiere hacer una revisión de la captura de estos datos.
 
-C. Variable start_depth
+C. Boxplot Variable start_depth
 
 ```{r}
 boxplot(data_factor$start_depth)
 ```
 El comportamiento de esta variable muestra que los datos se agruparon entre profundidades inciales de 200 y 1000 metros aproximadamente, con algunos valores atípicos que superaron los 2500 metros.
 
-D. Distancia a la costa
+D. Boxplot Distancia a la costa
 
 ```{r}
 boxplot(data_factor$distance_from_shore)
@@ -292,32 +290,44 @@ boxplot(data_factor$distance_from_shore)
 
 Por último, la mayoría de los puntos de muestreo se ubicaron entre los 25 y 70 kilómetros de la costa. Sólo dos registros superaron los 100 km de distancia.
 
-#Análisis entre variables numéricas.
+2. Asociación entre variables
 
-Definimos un vector con solo las variables númericas
+A. Posibles diagramas de dispersión entre las variables continuas y correlaciones.
+
+Creamos un nuevo objeto con variables numéricas:
 
 ```{r}
-select(vivos, distance_from_shore,start_depth,surface_temperature,individuals)->variables_numericas
-
+select(data_dep1, distance_from_shore,start_depth,surface_temperature,individuals)->data_dep1_num
 ```
 
+Correlogramas:
 
 ```{r}
+## Instalamos la librería GGally
+#install.packages('GGally')
+
+## Cargamos la librería
+library('GGally')
+
 ## Creamos la visualización usando el método ggpairs()
 ggpairs(
-  variables_numericas, 
+  data_dep1_num, 
   title="Correlograma"
   ) 
 ```
 
+Correlación de Spearman para nuestras variables numéricas:
 
 ```{r}
 ggcorr(
-  variables_numericas, 
-  method = c("everything", "pearson"),
+  data_dep1_num, 
+  method = c("everything", "spearman"),
   size = 3
   )
 ```
+
+
+Con base en las variables continuas se evidencia que no exite una correlación entre las variables independientes y nuestra variable de interés denominada "individuals". La única correlación fuerte encontrada fué positiva entre las variables "distance_from_shore" y "start_depth", lo cual es obvio ya que a mayor distancia de la costa hay mayor profundidad.
 
 #Analisis entre variables numericas y variables categoricas.
 
