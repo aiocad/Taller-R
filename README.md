@@ -360,48 +360,8 @@ ggboxplot(data_factor, x = "year", y = "surface_temperature",
           palette = c("#00AFBB", "#E7B800"))
 ```
 
-Con base ne las gráficas anteriores podemos deducir que la mayor variación en el conteo de individuos se presentó en el crucero "Pre-recruit", en el cual se presentan los datos más altos de conteo. Respecto a las estaciones, la estación 3 fué la que presentó mayor variación entre los conteos. Con base en el año de captura, se observó que en el 2013 y 2014 se presentan los datos con valores más abundantes, mientras que en el 2015 los valores reportados fueron menores a los 2000 individuos capturados. Con relación a la temperatura, se registraron valores más bajos en el año 2015 y un mayor número de datos atípicos en el 2013. 
+Con base en las gráficas anteriores, podemos deducir que la mayor variación en el conteo de individuos se presentó en el crucero "Pre-recruit", en el cual se presentaron los datos más altos de conteo. Respecto a las estaciones, la estación 3 fué la que presentó mayor variación entre el número de individuos capturados. Con base en el año de captura, se observó que en el 2013 y 2014 se presentaron los datos con valores más altos, mientras que en el 2015 los valores reportados fueron menores a los 2000 individuos capturados. Con relación a la temperatura, se registraron valores más bajos en el año 2015 y un mayor número de datos atípicos en el 2013. 
 
-
-B. Asociación entre una variable categórica y una continua
-
-
-```{r}
-p <- ggplot(vivos, aes(x=taxon, y=individuals))
-p + geom_boxplot()
-```
-
-Se evidencia un organismo (Variable taxon) que contiene la mayor cantidad de individuos.
-
-Por facilidad, haremos una prueba de Kruskall-Wallis cuyo p-valor nos indicará si existe una relación significante entre las variables.
-
-Hipótesis nula: las variables son independientes.
-Hipótesis alternativa: las variables son dependientes.
-
-```{r}
-p <- ggplot(vivos, aes(x=depth, y=individuals))
-p + geom_boxplot()
-```
-
-
-```{r}
-p <- ggplot(vivos, aes(x=offshore_distance, y=individuals))
-p + geom_boxplot()
-```
-
-
-
-
-```{r}
-# Discretizamos los organismos (Individuals) de los datos del censo
-# mutate() anexa/crea variables a la base de datos
-vivos %>% mutate(
-  individuals2 = vivos$individuals,
-   rangos = cut(individuals2, c(0, 1000, 10000, 100000, Inf))
-) -> datos_completos_fechas
-
-head(datos_completos_fechas[(ncol(datos_completos_fechas)-1):ncol(datos_completos_fechas)])
-```
 
 ## Punto 4: Tabla dinámica
 
@@ -420,6 +380,29 @@ Construcción de la tabla dinámica: la salida nos muestra una tabla dinámica c
 rpivotTable(data_factor, rows="year", col="offshore_distance", aggregatorName="Sum", vals="individuals")
 ```
 
+
+
+
+
+
+Por facilidad, haremos una prueba de Kruskall-Wallis cuyo p-valor nos indicará si existe una relación significante entre las variables.
+
+Hipótesis nula: las variables son independientes.
+Hipótesis alternativa: las variables son dependientes.
+
+
+
+
+```{r}
+# Discretizamos los organismos (Individuals) de los datos del censo
+# mutate() anexa/crea variables a la base de datos
+vivos %>% mutate(
+  individuals2 = vivos$individuals,
+   rangos = cut(individuals2, c(0, 1000, 10000, 100000, Inf))
+) -> datos_completos_fechas
+
+head(datos_completos_fechas[(ncol(datos_completos_fechas)-1):ncol(datos_completos_fechas)])
+```
 
 
 
