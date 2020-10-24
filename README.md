@@ -95,7 +95,7 @@ La variable surface_temperatura presenta 22 datos perdidos. Por tal motivo proce
 
 ### Prueba para probar si la pérdida de datos es aleatoria 
 
-Asignamos un nuevo objeto con las variables numéricas:
+Asignamos un nuevo objeto con las variables numéricas denominado variables_numericas:
 
 ```{r}
 select(vivos, distance_from_shore,start_depth,surface_temperature,individuals)->variables_numericas
@@ -114,7 +114,7 @@ TestMCARNormality(variables_numericas)
 ```
 De la prueba anterior se concluye que los datos no fueron perdidos de forma aleatotia.
 
-### Obtenemos el nuevo dataset luego de haber eliminado los 22 datos faltantes de la temperatura.
+### Obtenemos el nuevo dataset luego de haber eliminado los 22 datos faltantes de la temperatura, lo denominamos como data_dep1.
 
 Esto se hizo teniendo en cuenta que los datos no fueron perdidos de forma aleatoria.
 
@@ -152,7 +152,7 @@ boxplot(data_dep1$individuals)
 boxplot.stats(data_dep1$individuals)$out
 
 ```
-Se observa una gran varianción entre la variable objetivo "individuals" sin embargo los valores los interpretamos como lógicos ya que esta variable hace referencia al número de individuos capturados por grupo biológico. Sabemos que contamos con grupos muy diversos por ejemplo, peces, medusas, camarones, krill entre otros, que podrían llegar a ser poco o muy abundantes.
+Se observa una gran varianción entre la variable objetivo "individuals" sin embargo, los valores los interpretamos como lógicos ya que esta variable hace referencia al número de individuos capturados por grupo biológico. Sabemos que contamos con grupos muy diversos por ejemplo, peces, medusas, camarones, krill entre otros, que podrían llegar a ser poco o muy abundantes.
 
 Otro método para evaluar los datos atípicos es la distancia de cook. En ese sentido, diremos que tendremos una fila que representa una observación atípica si el valor observado es superior a 4 veces el promedio (no es un límite estricto).
 
@@ -195,7 +195,7 @@ str(data_dep1)
 
 
 ```{r}
-## Convertimos variables respectivas a factores
+## Convertimos variables respectivas a factores, y obtenemos un nuevo objeto denominado data_factor
 factores <- c("year", "station")
 data_dep1 %>% mutate_at(factores,factor) -> data_factor
 ```
@@ -372,8 +372,9 @@ Al obtener ésta gráfica, se observa que el número de individuos capturados au
 
 B. Planteamiento de preguntas: Con base en la tabla dinámica, podemos formular las siguientes preguntas.
 
-Pregunta 1: ¿Se presentaron diferencias significativas en el número de individuos capturados entre los periodos de muestreo?
-Pregunta 2: ¿Se presentaron diferencias significativas de temperatura superficial entre los periodos de muestreo?
+  - Pregunta 1: ¿Se presentaron diferencias significativas en el número de individuos capturados entre los periodos de muestreo?
+  
+  - Pregunta 2: ¿Se presentaron diferencias significativas de temperatura superficial entre los periodos de muestreo?
 
 C. Planteamiento de hipótesis:
 
