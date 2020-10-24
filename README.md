@@ -380,13 +380,13 @@ C. Planteamiento de hipótesis:
 
 - Hipótesis 1: El año de muestreo afecta el número de individuos capturados. 
 
-    H0: Las variables número de individuos y año de muestreo son independientes
-    H1: Las variables número de individuos y año de muestreo son dependientes
+   - H0: Las variables número de individuos y año de muestreo son independientes
+   - H1: Las variables número de individuos y año de muestreo son dependientes
    
 - Hipótesis 2: La temperatura superficial del mar se verá influencia por el año de muestreo.   
 
-    H0: Las variables temperatura y año de muestreo son independientes
-    H1: Las variables temperatura y año de muestreo son dependientes
+   - H0: Las variables temperatura y año de muestreo son independientes
+   - H1: Las variables temperatura y año de muestreo son dependientes
 
 Para comprobar las anteriores hipótesis, realizaremos una prueba de Kruskall-Wallis cuyo p-valor nos indicará si existe una relación significante entre las variables.
 
