@@ -173,7 +173,7 @@ text(x=1:length(cooksd)+1, y=cooksd, labels=ifelse(cooksd>4*mean(cooksd, na.rm=T
 atipicas <- which((cooksd>4*mean(cooksd, na.rm=T)) == "TRUE")
 atipicas
 ```
-Con relación a este análisis se obtuvieron 9 filas para revisar, las cuales correspondieron al grupo Euphausiidae conocido comúnmente como Krill, el cual presentó abundancias superiores a los 121000 individuos y alcanzó un máximo de 1017133. Para un mejor análisis, se sugiere verificar el método de muestreo y las unidades que se reportan, ya que se registran como #número de individuos capturados, pero no se sabe si estos son datos brutos o estandarizados. Para el objetivo del presente taller, procederemos a trabajar con los datos obtenidos, sin depurar éstos valores. Supondremos que son número de individuos y se encuentran en la misma unidad.
+Con relación a este análisis se obtuvieron 9 filas para revisión, las cuales correspondieron al grupo Euphausiidae conocido comúnmente como Krill, el cual presentó abundancias superiores a los 121000 individuos y alcanzó un máximo de 1017133. Para un mejor análisis, se sugiere verificar el método de muestreo y las unidades que se reportan, ya que se registran como #número de individuos capturados, pero no se sabe si estos son datos brutos o estandarizados. Para el objetivo del presente taller, procederemos a trabajar con los datos obtenidos, sin depurar éstos valores. Supondremos que son número de individuos y se encuentran en la misma unidad.
 
 ## Punto 3: ANÁLISIS DESCRIPTIVO 
 
@@ -214,7 +214,7 @@ Un método que resume la estadística descriptiva de las variables numéricas:
 ```{r}
 summarytools::descr(data_factor)
 ```
-En total se obtuvieron 2430 registros, 890 para el año 2011, 317 para el 2013, 617 para el 2014 y 606 para el año 2015. Con base en estos análisis, podemos decir que nuestra variable de interes "individuals" presentó un promedio de 3025 individuos capturados con un rango de variación entre 1 como el valor mínimo y 1017133 como el valor máximo con una desviación estándard de 34459.99. El valor central o la mediana fué de 4 individuos capturados. Por su parte la temperatura superficial del mar tuvo un promedio de 13.98 °C con una variación entre 2.4 y 17.4, la desviación estándard fue de 1.70. La profundidad al inicio del muestreo tuvo un promedio de 708.15 metros con st de 799.58 y un rango de variación entre 57 y 3100 metros. La distancia a la costa tuvo un promedio de 46.91 kilómetros con un rango de variación entre 6.7 y 176.3 kilómetros. La desviación estándard fue de 24.8.
+En total se obtuvieron 2430 registros, 890 para el año 2011, 317 para el 2013, 617 para el 2014 y 606 para el año 2015. Con base en estos análisis, podemos decir que nuestra variable de interes "individuals" presentó un promedio de 3025 individuos capturados con un rango de variación entre 1 como el valor mínimo y 1017133 como el valor máximo con una desviación estándard de 34459.99. El valor central o la mediana fué de 4 individuos capturados. Por su parte la temperatura superficial del mar tuvo un promedio de 13.98 °C con una variación entre 2.4 y 17.4°C, la desviación estándard fue de 1.70. La profundidad al inicio del muestreo tuvo un promedio de 708.15 metros con st de 799.58 y un rango de variación entre 57 y 3100 metros. La distancia a la costa tuvo un promedio de 46.91 kilómetros con un rango de variación entre 6.7 y 176.3 kilómetros. La desviación estándard fue de 24.8.
 
 También podemos sacar estadísticos descriptivos para la variable cualitativa "taxon" que se refiere a los diferentes grupos de organismos.
 
@@ -273,7 +273,7 @@ B. Boxplot Variable surface_temperature
 boxplot(data_factor$surface_temperature)
 ```
 
-Al construir un boxplot con esta variable el 50% de la información se agrupó entre valores de 13°C y 15°C, además de evidencian valores muy bajos menores a los 10°C y un dato menor a 5°C, los cuales se consideran atípicos para la zona de estudio, por lo que se sugiere hacer una revisión de la captura de estos datos.
+Al construir un boxplot con esta variable, el 50% de la información se agrupó entre valores de 13°C y 15°C, además se evidencian valores muy bajos menores a los 10°C y un dato menor a 5°C, los cuales se consideran atípicos para la zona de estudio, por lo que se sugiere hacer una revisión de la captura de estos datos.
 
 C. Boxplot Variable start_depth
 
@@ -351,8 +351,6 @@ ggboxplot(data_factor, x = "year", y = "individuals",
           palette = c("#00AFBB", "#E7B800"))
 ```
 
-
-
 Cómo se comportó la temperatura respecto al año:
 
 ```{r}
@@ -377,18 +375,66 @@ library(rpivotTable)
 Construcción de la tabla dinámica: la salida nos muestra una tabla dinámica como se trabaja en excel, podemos hacer la combinación deseada de las variables de interés.
 
 ```{r}
-rpivotTable(data_factor, rows="year", col="offshore_distance", aggregatorName="Sum", vals="individuals")
+rpivotTable(data_factor, rows="condition", col="year", aggregatorName="Sum", vals="individuals")
 ```
+ 
+A. Construya una gráfica que relacione dos de las variables que cruzó.
 
+Con la tabla anterior, podemos construir una gráfica entre las variables "individuals" (continua) y "year" (categórica). Para ello, seleccionamos la opción "Line Chart" que se encuentra en el cuadro desplegable, en la parte superior izquierda de la tabla dinámica.
 
+Al obtener ésta gráfica, se observa que el número de individuos capturados aumentó entre el 2011 y el 2014. Sin embargo en el 2015, se presentó una caída drástica de la captura, en el cual se reportó una suma de 33,160.00 individuos capturados. La mayor captura se registró en el año 2014 con 2,897,501.00 individuos. 
 
+B. Planteamiento de preguntas: Con base en la tabla dinámica, podemos formular las siguientes preguntas.
 
+Pregunta 1: ¿Se presentaron diferencias significativas en el número de individuos capturados entre los periodos de muestreo?
+Pregunta 2: ¿Se presentaron diferencias significativas de temperatura superficial entre los periodos de muestreo?
 
+C. Planteamiento de hipótesis:
 
-Por facilidad, haremos una prueba de Kruskall-Wallis cuyo p-valor nos indicará si existe una relación significante entre las variables.
+Hipótesis 1: El año de muestreo afecta el número de individuos capturados. 
+
+    H0: Las variables número de individuos y año de muestreo son independientes
+    H1: Las variables número de individuos y año de muestreo son dependientes
+   
+Hipótesis 2: La temperatura superficial del mar se verá influencia por el año de muestreo.   
+
+    H0: Las variables temperatura y año de muestreo son independientes
+    H1: Las variables temperatura y año de muestreo son dependientes
+
+Para comprobar las anteriores hipótesis, realizaremos una prueba de Kruskall-Wallis cuyo p-valor nos indicará si existe una relación significante entre las variables.
 
 Hipótesis nula: las variables son independientes.
 Hipótesis alternativa: las variables son dependientes.
+
+Prueba hipótesis 1:
+```{r}
+kruskal.test(data_factor$individuals, data_factor$year)
+```
+
+
+Prueba hipótesis 2:
+```{r}
+kruskal.test(data_factor$surface_temperature, data_factor$year)
+```
+
+Las anteriores pruebas arrojaron un p-valor <0.05, es decir que podemos rechazar la hipótesis nula de independencia. En este sentido, las dos variables evaluadas son dependientes del año de muestreo.
+
+Visualización: Construimos un gráfico boxplot entre cada variable continua y el año de muestreo.
+
+Número de individuos por año de muestreo:
+```{r}
+ggboxplot(data_factor, x = "year", y = "individuals",
+          palette = c("#00AFBB", "#E7B800"))
+```
+
+Temperatura superficial por año de muestreo:
+
+```{r}
+ggboxplot(data_factor, x = "year", y = "surface_temperature",
+          palette = c("#00AFBB", "#E7B800"))
+```
+
+
 
 
 
