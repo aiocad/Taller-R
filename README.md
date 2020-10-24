@@ -344,21 +344,7 @@ ggboxplot(data_factor, x = "station", y = "individuals",
 ```
 
 
-Individuos por año
-
-```{r}
-ggboxplot(data_factor, x = "year", y = "individuals",
-          palette = c("#00AFBB", "#E7B800"))
-```
-
-Cómo se comportó la temperatura respecto al año:
-
-```{r}
-ggboxplot(data_factor, x = "year", y = "surface_temperature",
-          palette = c("#00AFBB", "#E7B800"))
-```
-
-Con base en las gráficas anteriores, podemos deducir que la mayor variación en el conteo de individuos se presentó en el crucero "Pre-recruit", en el cual se presentaron los datos más altos de conteo. Respecto a las estaciones, la estación 3 fué la que presentó mayor variación entre el número de individuos capturados. Con base en el año de captura, se observó que en el 2013 y 2014 se presentaron los datos con valores más altos, mientras que en el 2015 los valores reportados fueron menores a los 2000 individuos capturados. Con relación a la temperatura, se registraron valores más bajos en el año 2015 y un mayor número de datos atípicos en el 2013. 
+Con base en las gráficas anteriores, podemos deducir que la mayor variación en el conteo de individuos se presentó en el crucero "Pre-recruit", en el cual se presentaron los datos más altos de conteo. Respecto a las estaciones, la estación 3 fué la que presentó mayor variación entre el número de individuos capturados. 
 
 
 ## Punto 4: Tabla dinámica
@@ -391,20 +377,20 @@ Pregunta 2: ¿Se presentaron diferencias significativas de temperatura superfici
 
 C. Planteamiento de hipótesis:
 
-Hipótesis 1: El año de muestreo afecta el número de individuos capturados. 
+- Hipótesis 1: El año de muestreo afecta el número de individuos capturados. 
 
     H0: Las variables número de individuos y año de muestreo son independientes
     H1: Las variables número de individuos y año de muestreo son dependientes
    
-Hipótesis 2: La temperatura superficial del mar se verá influencia por el año de muestreo.   
+- Hipótesis 2: La temperatura superficial del mar se verá influencia por el año de muestreo.   
 
     H0: Las variables temperatura y año de muestreo son independientes
     H1: Las variables temperatura y año de muestreo son dependientes
 
 Para comprobar las anteriores hipótesis, realizaremos una prueba de Kruskall-Wallis cuyo p-valor nos indicará si existe una relación significante entre las variables.
 
-Hipótesis nula: las variables son independientes.
-Hipótesis alternativa: las variables son dependientes.
+- Hipótesis nula: las variables son independientes.
+- Hipótesis alternativa: las variables son dependientes.
 
 Prueba hipótesis 1:
 ```{r}
@@ -421,23 +407,25 @@ Las anteriores pruebas arrojaron un p-valor <0.05, es decir que podemos rechazar
 
 Visualización: Construimos un gráfico boxplot entre cada variable continua y el año de muestreo.
 
-Número de individuos por año de muestreo:
+- Número de individuos por año de muestreo:
 ```{r}
 ggboxplot(data_factor, x = "year", y = "individuals",
           palette = c("#00AFBB", "#E7B800"))
 ```
 
-Temperatura superficial por año de muestreo:
+- Temperatura superficial por año de muestreo:
 
 ```{r}
 ggboxplot(data_factor, x = "year", y = "surface_temperature",
           palette = c("#00AFBB", "#E7B800"))
 ```
 
+Con base en el boxplot del número de individuos obtenido por año de muestreo, podemos inferir que en el 2015 se presentó la menor dispersión de los datos, y la mayoría de estos se concentraron con valores bajos para el número de individuos capturado.
+
+Respecto a la temperatura, en el año 2015 se reportaron los valores más bajos sin presencia de datos atípicos. Por su parte, en el 2013 se observó un mayor número de datos atípicos y en el 2011 se registró un valor atípico de 2.4°C, el cual debe revisarse, ya que es muy bajo. 
 
 
-
-
+Nota: La discretización se realiza, si vamos a cruzar dos variables continuas en la tabla dinámica. Si lo quieres revisar lo podemos dejar. 
 
 ```{r}
 # Discretizamos los organismos (Individuals) de los datos del censo
@@ -450,5 +438,5 @@ vivos %>% mutate(
 head(datos_completos_fechas[(ncol(datos_completos_fechas)-1):ncol(datos_completos_fechas)])
 ```
 
-
+PENDIENTE DIAGRAMA DE FLUJO
 
