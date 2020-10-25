@@ -426,18 +426,3 @@ Con base en el boxplot del número de individuos obtenido por año de muestreo, 
 Respecto a la temperatura, en el año 2015 se reportaron los valores más bajos sin presencia de datos atípicos. Por su parte, en el 2013 se observó un mayor número de datos atípicos y en el 2011 se registró un valor atípico de 2.4°C, el cual debe revisarse, ya que es muy bajo. 
 
 
-Nota: La discretización se realiza, si vamos a cruzar dos variables continuas en la tabla dinámica. Si lo quieres revisar lo podemos dejar. 
-
-```{r}
-# Discretizamos los organismos (Individuals) de los datos del censo
-# mutate() anexa/crea variables a la base de datos
-vivos %>% mutate(
-  individuals2 = vivos$individuals,
-   rangos = cut(individuals2, c(0, 1000, 10000, 100000, Inf))
-) -> datos_completos_fechas
-
-head(datos_completos_fechas[(ncol(datos_completos_fechas)-1):ncol(datos_completos_fechas)])
-```
-
-PENDIENTE DIAGRAMA DE FLUJO
-
